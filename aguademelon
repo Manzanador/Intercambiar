@@ -1,0 +1,81 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp3
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Product sis = new Yogurt();
+            Product product = new Product("Jugo", 35, 21);
+            Yogurt yogurt = new Yogurt(10,"Hola",0,0);
+            sis.Mostrar();
+            Console.WriteLine("Ingrese la cantidad actualizada");
+            int CantAct = int.Parse(Console.ReadLine());
+            product.Actualizar(CantAct);
+        }
+    }
+    class Product
+    {
+        public string Name { get; set; }
+        public int Price { get; set; }
+        public int AvailableQuantity { get; set; }
+        public Product(string name, int price, int availableQuantity)
+        {
+            Name = name;
+            Price = price;
+            AvailableQuantity = availableQuantity;
+        }
+
+        public Product()
+        {
+            Name = ".";
+            Price=0; 
+            AvailableQuantity = 0;
+        }
+
+        public Product (Product p)
+        {
+            Name=p.Name;
+            Price = p.Price;
+            AvailableQuantity = p.AvailableQuantity;
+        }
+
+        public virtual void Mostrar()
+        {
+            Console.WriteLine(Name + "." + "\nPrecio: " + Price + "\nCantidad disponible: " + AvailableQuantity);
+        }
+        public void Actualizar(int CantAct)
+        {
+            AvailableQuantity = CantAct;
+        }
+    }
+
+    class Yogurt : Product
+    {
+        public int Gr { get; set; }
+        public Yogurt(int gr, string Name, int Price, int AvalibleQuantity) : base(Name, Price, AvalibleQuantity)
+        {
+            Gr = gr;
+        }
+
+        public Yogurt(Yogurt y) : base(y)
+        {
+            Gr = y.Gr; 
+        }
+
+        public Yogurt() : base() 
+        {
+            Gr= 0;
+        }
+
+        public override void Mostrar()
+        {
+            Console.WriteLine(Name + "." + "\nPrecio: " + Price + "\nCantidad disponible: " + AvailableQuantity + "\nGramos: " + Gr);
+        }
+    }
+}
