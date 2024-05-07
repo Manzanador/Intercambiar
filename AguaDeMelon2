@@ -1,0 +1,138 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp3
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Product sis = new Yogurt();
+            Yogurt yogurt = new Yogurt(10, 0, 0, "Hola");
+            sis.Mostrar();
+            Console.WriteLine("Ingrese la cantidad actualizada");
+            int CantAct = int.Parse(Console.ReadLine());
+            YogurtLight Yagami = new YogurtLight();
+            Yagami.Mostrar();
+        }
+    }
+    public abstract class Product
+    {
+        public abstract void showName();
+        private string _name;
+        public string Name {
+            get { return this._name; }
+            set { this._name = value; } 
+        }
+        private int _price;
+        public int Price {
+            get { return this._price; }
+            set { this._price = Copium(value); }
+        }
+        private int _AvailableQuantity;
+        public int AvailableQuantity {
+            get { return this._AvailableQuantity; }
+            set {this._AvailableQuantity = Copium(value); } 
+        }
+        public Product(string name, int price, int availableQuantity)
+        {
+            Name = name;
+            Price = price;
+            AvailableQuantity = availableQuantity;
+        }
+
+        public Product()
+        {
+            Name = ".";
+            Price = 0;
+            AvailableQuantity = 0;
+        }
+
+        public Product(Product p)
+        {
+            Name = p.Name;
+            Price = p.Price;
+            AvailableQuantity = p.AvailableQuantity;
+        }
+
+        public virtual void Mostrar()
+        {
+            Console.WriteLine(Name + "." + "\nPrecio: " + Price + "\nCantidad disponible: " + AvailableQuantity);
+        }
+        public void Actualizar(int CantAct)
+        {
+            AvailableQuantity = CantAct;
+        }
+        protected int Copium(int wasaringa)
+        {
+            if (wasaringa < 0)
+            {
+                wasaringa = 0;
+            }
+            return wasaringa;
+        }
+    }
+
+    public class Yogurt : Product
+    {
+        private int _gr;
+        public int Gr {
+            get {return this._gr; }
+            set {this._gr= Copium(value); } 
+        }
+        public Yogurt(int gr, int Price, int AvalibleQuantity, string Name) : base(Name, Price, AvalibleQuantity)
+        {
+            Gr = gr;
+        }
+
+        public Yogurt(Yogurt y) : base(y)
+        {
+            Gr = y.Gr;
+        }
+                                     
+        public Yogurt() : base()
+        {
+            Gr = 0;
+        }
+
+        public override void Mostrar()
+        {
+            base.Mostrar();
+            Console.WriteLine("\nGramos: " + Gr);
+        }
+        public override void showName()
+        {
+            Console.WriteLine("sas en toda la boca dice el joker");
+        }
+    }
+    public class YogurtLight : Yogurt
+    {
+        private int _grasa;
+        public int Grasa
+        {
+            get { return this._grasa; }
+            set { this._grasa = Copium(value); }
+        }
+        public YogurtLight() : base()
+        {
+            Grasa = 0;
+        }
+        public YogurtLight(int Gr, string Name, int Price, int AvailableQuantity,int grasa) : base(Gr, Price, AvailableQuantity, Name)
+        {
+            Grasa = grasa;
+        }
+        public YogurtLight(YogurtLight W): base(W)
+        {
+            Grasa = W.Grasa;
+        }
+        public override void Mostrar()
+        {
+            base.Mostrar();
+            Console.WriteLine("\n" + "Grasa: " + Grasa);
+        }
+    }
+}
