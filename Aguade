@@ -12,3 +12,13 @@
         </Button>
     </Grid>
 </Window>
+
+
+<Button Click="Button_Click">
+            <Button.Height>100</Button.Height>
+            <Button.Width>200</Button.Width>
+            <Button.Content>Pela</Button.Content>
+            <Button.Foreground>Aqua</Button.Foreground>
+            <Button.Background>Bisque</Button.Background>
+            <Button.FontSize>16</Button.FontSize>
+        </Button>
