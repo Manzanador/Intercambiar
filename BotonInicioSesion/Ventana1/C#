@@ -53,6 +53,9 @@ namespace WpfApp2
                         if (reader.HasRows)
                         {
                             MessageBox.Show("Sesion iniciada");
+                            Window1 Ventana = new Window1(uid);
+                            Ventana.Show();
+                            this.Close();
                         }
                         else
                         {
@@ -76,5 +79,5 @@ namespace WpfApp2
             }
         }
     }
-    }
+}
 
