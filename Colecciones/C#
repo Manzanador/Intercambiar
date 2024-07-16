@@ -1,0 +1,37 @@
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        List<int> Numeros = new List<int>();
+        Console.WriteLine("Cuantos elementos desea ingresar");
+        int CantidadElementos;
+        if(int.TryParse(Console.ReadLine(), out CantidadElementos)) { 
+            for (int i = 0; i < CantidadElementos; i++)
+            {
+                Console.WriteLine("Ingrese un elemento");
+                int Elemento;
+                while (!int.TryParse(Console.ReadLine(), out Elemento)) { 
+                    Console.WriteLine("Formato erroneo");
+                    Console.WriteLine("Ingrese un elemento");
+                }
+                Numeros.Add(Elemento);
+        }
+            int[] Numeros2 = new int[5] { 1, 2, 3, 4, 0 };
+            for (int i = 0; i<Numeros2.Length; i++)
+            {
+                Numeros.Add(Numeros2[i]);
+            }
+            if (Numeros.Contains(0))
+            {
+                Numeros.Remove(0);
+            }
+            Console.WriteLine("Elementos");
+            for (int i = 0; i<Numeros.Count; i++ ) { 
+                Console.WriteLine(Numeros[i]);
+            }
+        } else
+        {
+            Console.WriteLine("Formato erroneo");
+        }
+    }
+}
