@@ -1,0 +1,58 @@
+using ConsoleApp1;
+
+internal class Program
+{
+    /*private static void Main(string[] args)
+    {
+        Stack<int> ints = new Stack<int>();
+        int[] ints1 = new int[5] { 1, 2, 3, 4, 5 };
+        foreach(int i in ints1)
+        {
+            ints.Push(i);
+        }
+        foreach (int i in ints)
+        {
+            Console.WriteLine(i);
+        }
+        for(int i=0; i < 2; i++) 
+        { 
+            ints.Pop(); 
+        
+        }
+        foreach (int i in ints)
+        {
+            Console.WriteLine(i);
+        }
+    }*/
+    private static void Main(string[] args)
+    {
+        Usuario usuario1 = new Usuario("Gwyn", "Ceniza", 225, 12345678);
+        Usuario usuario2 = new Usuario("Astrid", "Oscura", 26, 12345670);
+        Usuario usuario3 = new Usuario("Maga", "Chica", 123, 12345689);
+        Usuario usuario4 = new Usuario("Clotilde", "Tamarindo", 77, 12345668);
+        Usuario usuario5 = new Usuario("ElNubiNubi", "Mantis", 46, 87654321);
+
+        Dictionary <int, Usuario> ListaUsuarios= new Dictionary<int, Usuario>();
+        ListaUsuarios.Add(usuario1.CI, usuario1);
+        ListaUsuarios.Add(usuario2.CI, usuario2);
+        ListaUsuarios.Add(usuario3.CI, usuario3);
+        ListaUsuarios.Add(usuario4.CI, usuario4);
+        ListaUsuarios.Add(usuario5.CI, usuario5);
+        foreach(KeyValuePair<int, Usuario> i in ListaUsuarios)
+        {
+            Usuario UsuarioDelMomento = ListaUsuarios[i.Key];
+            UsuarioDelMomento.MuestroTodoUsuario();
+        }
+        Console.WriteLine("Ingrese una CI");
+        int CIIngresada = int.Parse(Console.ReadLine());
+        Usuario UsuarioEncontrado = new Usuario();
+        if (ListaUsuarios.TryGetValue(CIIngresada, out UsuarioEncontrado))
+        {
+            Console.WriteLine("Usuario encontrado");
+        }
+        else
+        {
+            Console.WriteLine("Usuario no encontrado");
+        }
+    }
+}
