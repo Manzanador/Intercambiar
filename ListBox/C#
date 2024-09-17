@@ -1,0 +1,60 @@
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace WpfApp1
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+            MariaDBConnection conexion = new MariaDBConnection("192.168.2.53", "hgugiato", "hgugiato", "57233256", 3306);
+            DataTable Tabla = conexion.GetDataTable("select * from Cliente");
+            CargarListViewCliente(Tabla);
+
+        }
+        public void CargarListViewCliente(DataTable Tabla)
+        {
+            lstCliente.DisplayMemberPath = "Nombre";
+            lstCliente.SelectedValuePath = "CI";
+            lstCliente.ItemsSource = Tabla.DefaultView;
+        }
+        public void CargarListViewPedido(DataTable Tabla)
+        {
+            lstPedidos.DisplayMemberPath = "Fecha";
+            lstPedidos.SelectedValuePath = "Nro";
+            lstPedidos.ItemsSource = Tabla.DefaultView;
+        }
+        private void lstCliente_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MariaDBConnection conexion = new MariaDBConnection("192.168.2.53", "hgugiato", "hgugiato", "57233256", 3306);
+            DataTable Tabla = conexion.GetDataTable("select * from Pedido where CI=" + lstCliente.SelectedValue);
+            CargarListViewPedido(Tabla);
+            Tabla = conexion.GetDataTable("select Concat(Nro, ' | ', Fecha, ' | ', Monto, ' | ', FormaPago, ' | ', CI) as Datos from Pedido where CI=" + lstCliente.SelectedValue);
+            CargarListViewPedidoEntero(Tabla);
+
+        }
+        public void CargarListViewPedidoEntero(DataTable Tabla)
+        {
+            lstPedidosEntero.DisplayMemberPath = "Datos";
+            lstPedidosEntero.SelectedValuePath = "Nro";
+            lstPedidosEntero.ItemsSource = Tabla.DefaultView;
+        }
+    }
+}
