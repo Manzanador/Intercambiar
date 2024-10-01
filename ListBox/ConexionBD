@@ -126,4 +126,10 @@ public class MariaDBConnection
 
         return dataTable;
     }
+    public void EliminarPedido(string Nro)
+    {
+        OpenConnection();
+        ExecuteNonQuery("Delete from Pedido where Nro=" + Nro + ";");
+        CloseConnection();
+    }
 }
