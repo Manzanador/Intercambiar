@@ -1,3 +1,4 @@
+using Dukiii;
 using Mysqlx.Datatypes;
 using System.Collections.Generic;
 using System.Data;
@@ -48,7 +49,7 @@ namespace WpfApp1
 
         private void btnEliminarPedido_Click(object sender, RoutedEventArgs e)
         {
-            if(lstPedidosEntero.SelectedIndex != -1)
+            if (lstPedidosEntero.SelectedIndex != -1)
             {
                 try
                 {
@@ -57,13 +58,28 @@ namespace WpfApp1
                     DataTable Tabla = conexion.GetDataTable("select Concat(Nro, ' | ', Fecha, ' | ', Monto, ' | ', FormaPago, ' | ', CI) as Datos, Nro from Pedido where CI=" + lstCliente.SelectedValue);
                     CargarListViewPedidoEntero(Tabla);
                     MessageBox.Show("Pedido eliminado exitosamente");
-                } catch (System.Exception ex)
+                }
+                catch (System.Exception ex)
                 {
                     MessageBox.Show("Error desde la base de datos: " + ex);
                 }
-            } else
+            }
+            else
             {
                 MessageBox.Show("Debe seleccionar una entrada en la lista de pedidos para eliminarla");
+            }
+        }
+        private void btnModificarCliente_Click(object sender, RoutedEventArgs e)
+        {
+            if (lstCliente.SelectedIndex != -1)
+            {
+                ModCliente modCliente = new ModCliente(lstCliente.SelectedValue.ToString());
+                modCliente.Show();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar una entrada en la lista de clientes para modificarla");
             }
         }
     }
