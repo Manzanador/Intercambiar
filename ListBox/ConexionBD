@@ -27,7 +27,7 @@ public class MariaDBConnection
     private void Initialize()
     {
         string connectionString;
-        connectionString = $"SERVER ={ server}; PORT ={ port}; DATABASE ={ database}; UID ={ uid}; PASSWORD ={ password}; "; 
+        connectionString = $"SERVER ={server}; PORT ={port}; DATABASE ={database}; UID ={uid}; PASSWORD ={password}; ";
 
         connection = new MySqlConnection(connectionString);
     }
@@ -130,6 +130,24 @@ public class MariaDBConnection
     {
         OpenConnection();
         ExecuteNonQuery("Delete from Pedido where Nro=" + Nro + ";");
+        CloseConnection();
+    }
+    public string TraerNombreCliente(string CI)
+    {
+        string Nombre = string.Empty;
+        OpenConnection();
+        MySqlDataReader Reader = ExecuteQuery("Select Nombre from Cliente where CI=" + CI + ";");
+        if (Reader.Read())
+        {
+            Nombre= Reader.GetValue(0).ToString();
+        }
+        CloseConnection();
+        return Nombre;
+    }
+    public void CambiarNombreCliente(string Nombre, string CI)
+    {
+        OpenConnection();
+        ExecuteNonQuery("update Cliente set Nombre='" + Nombre + "' where CI=" + CI + ";");
         CloseConnection();
     }
 }
