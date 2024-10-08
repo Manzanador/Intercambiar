@@ -1,0 +1,51 @@
+using MySql.Data.MySqlClient;
+using System.Windows;
+using WpfApp1;
+
+namespace Dukiii
+{
+    /// <summary>
+    /// Lógica de interacción para ModCliente.xaml
+    /// </summary>
+    public partial class ModCliente : Window
+    {
+        public ModCliente(string CI)
+        {
+            InitializeComponent();
+            txtCI.Text = CI;
+            try
+            {
+                MariaDBConnection conexion = new MariaDBConnection("192.168.2.53", "hgugiato", "hgugiato", "57233256", 3306);
+                txtNombre.Text = conexion.TraerNombreCliente(CI);
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("Error desde la BD: " + ex);
+            }
+        }
+
+        private void Button_ClickSalir(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
+        }
+
+        private void Button_ClickIngresar(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MariaDBConnection conexion = new MariaDBConnection("192.168.2.53", "hgugiato", "hgugiato", "57233256", 3306);
+                conexion.CambiarNombreCliente(txtNombre.Text, txtCI.Text);
+                MessageBox.Show("Nombre cambiado exitosamente");
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+                this.Close();
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("Error desde la base de datos: " + ex);
+            }
+        }
+    }
+}
