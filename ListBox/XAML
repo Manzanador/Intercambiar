@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <ScrollViewer>
     <StackPanel>
         <ListBox Name="lstCliente" Height="150" SelectionChanged="lstCliente_SelectionChanged">
         </ListBox>
@@ -13,5 +14,8 @@
         </ListBox>
         <ListBox Name="lstPedidosEntero" Height="150">
         </ListBox>
-    </StackPanel>
+        <Button Width="100" Height="30" Click="btnEliminarPedido_Click" Content="EliminarPedido"></Button>
+        <Button Width="100" Height="30" Click="btnModificarCliente_Click" Content="ModificarCliente"></Button>
+        </StackPanel>
+    </ScrollViewer>
 </Window>
