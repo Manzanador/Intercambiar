@@ -139,7 +139,7 @@ public class MariaDBConnection
         MySqlDataReader Reader = ExecuteQuery("Select Nombre from Cliente where CI=" + CI + ";");
         if (Reader.Read())
         {
-            Nombre= Reader.GetValue(0).ToString();
+            Nombre = Reader.GetValue(0).ToString();
         }
         CloseConnection();
         return Nombre;
@@ -149,5 +149,53 @@ public class MariaDBConnection
         OpenConnection();
         ExecuteNonQuery("update Cliente set Nombre='" + Nombre + "' where CI=" + CI + ";");
         CloseConnection();
+    }
+    public string TraerFechaPedido(string Nro)
+    {
+        string Fecha = string.Empty;
+        OpenConnection();
+        MySqlDataReader Reader = ExecuteQuery("Select Fecha from Pedido where Nro=" + Nro + ";");
+        if (Reader.Read())
+        {
+            Fecha = Reader.GetValue(0).ToString();
+        }
+        CloseConnection();
+        return Fecha;
+    }
+    public string TraerFormaPagoPedido(string Nro)
+    {
+        string FormaPago = string.Empty;
+        OpenConnection();
+        MySqlDataReader Reader = ExecuteQuery("Select FormaPago from Pedido where Nro=" + Nro + ";");
+        if (Reader.Read())
+        {
+            FormaPago = Reader.GetValue(0).ToString();
+        }
+        CloseConnection();
+        return FormaPago;
+    }
+    public string TraerMontoPedido(string Nro)
+    {
+        string Monto = string.Empty;
+        OpenConnection();
+        MySqlDataReader Reader = ExecuteQuery("Select Monto from Pedido where Nro=" + Nro + ";");
+        if (Reader.Read())
+        {
+            Monto = Reader.GetValue(0).ToString();
+        }
+        CloseConnection();
+        return Monto;
+    }
+    public string TraerCIPedido(string Nro)
+    {
+        string CI = string.Empty;
+        OpenConnection();
+        MySqlDataReader Reader = ExecuteQuery("Select CI from Pedido where Nro=" + Nro + ";");
+        if (Reader.Read())
+        {
+            CI = Reader.GetValue(0).ToString();
+        }
+        CloseConnection();
+        return CI;
     }
 }
