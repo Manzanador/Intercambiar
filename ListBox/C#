@@ -1,9 +1,13 @@
+
 using Dukiii;
 using Mysqlx.Datatypes;
 using System.Collections.Generic;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
+using QuestPDF.Fluent;
+using QuestPDF.Infrastructure;
+
 namespace WpfApp1
 {
     /// <summary>
@@ -82,5 +86,52 @@ namespace WpfApp1
                 MessageBox.Show("Debe seleccionar una entrada en la lista de clientes para modificarla");
             }
         }
+
+        private void Button_ClickGenerarFactura(object sender, RoutedEventArgs e)
+        {
+            if(lstCliente.SelectedIndex != -1)
+            {
+                MariaDBConnection mariaDBConnection = new MariaDBConnection("192.168.2.53", "hgugiato", "hgugiato", "57233256", 3306);
+                // Crear una instancia de Invoice y llenar con datos de ejemplo
+                var invoice = new Invoice
+                {
+                    ClientName = mariaDBConnection.TraerCIPedido(lstPedidosEntero.SelectedValue.ToString()),
+                    Fecha = mariaDBConnection.TraerFechaPedido(lstPedidosEntero.SelectedValue.ToString()),
+                    FormPago = mariaDBConnection.TraerFormaPagoPedido(lstPedidosEntero.SelectedValue.ToString()),
+                    Monto = mariaDBConnection.TraerMontoPedido(lstPedidosEntero.SelectedValue.ToString())
+                };
+
+                // Crear el documento PDF
+                var document = Document.Create(container =>
+                {
+                    container.Page(page =>
+                    {
+                        page.Content()
+                            .Column(column =>
+                            {
+                                // Título de la factura
+                                column.Item().Text($"Factura para: {invoice.ClientName}").FontSize(20).Bold();
+
+                                // Sección de detalles de la compra
+                                column.Item().Text("Detalles de la compra:");
+                                column.Item().Text("Fecha de la compra:" + invoice.Fecha);
+                                column.Item().Text("Forma de pago utilizada:" + invoice.FormPago);
+                                column.Item().Text("Monto abonado:" + invoice.Monto);
+
+                                // Mostrar el total de la factura
+                            });
+                    });
+                });
+                QuestPDF.Settings.License = LicenseType.Community;
+                // Generar el PDF y guardarlo con el nombre "Factura.pdf"
+                document.GeneratePdf("PDFLOL.pdf");
+                document.GeneratePdfAndShow();
+                MessageBox.Show("Factura generada con exito");
+            } else
+            {
+                MessageBox.Show("Debe seleccionar un cliente para crear su factura");
+            }
+        }
     }
 }
+
