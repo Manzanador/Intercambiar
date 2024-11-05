@@ -1,0 +1,31 @@
+#!/bin/bash
+#Inicia el bucle en funcion de la opcion a seleccionar
+while [ "$OP" != 0 ]
+do
+echo "--------------------------------------------------------------------------------------------------------------------------------------------------------"
+#Imprime opciones
+echo "1) Menu de gestion de usuarios"
+echo "2) Menu de gestion de grupos"
+echo "3) Menu de consultas"
+echo "4) Menu administracion de base de datos"
+echo "5) Menu de testeos de conexion de red"
+echo "6) Menu de respaldos del sistema"
+echo "7) Menu de auditorias del sistema"
+echo "8) Menu de monitoreo de recursos del servidor"
+echo "0) Salir"
+read -p "Seleccione una opcion: " OP
+case $OP in
+#Llamados a los script correspondientes a la opcion seleccionada
+1) Usuarios.sh;;
+2) Grupos.sh;;
+3) Consultas.sh;;
+4) AdministracionBDD.sh;;
+5) TesteosRed.sh;;
+6) Respaldos.sh;;
+7) Auditoria.sh;;
+8) Recursos.sh;;
+0) echo "Adios";;
+*) echo "La opcion ingresada no es valida"
+sleep 2;;
+esac
+done
